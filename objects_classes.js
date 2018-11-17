@@ -40,6 +40,7 @@ myObject.name = 'Peter';
 console.log(myObject.name); // "John"
 
 
+
 // PROPERTY getters AND setters
 // Functions that work on getting and setting a value
 
@@ -90,3 +91,57 @@ let user = {
 user.password = 'abcd';
 console.log(user.password);
 user.password = 'a';  //Password is too short. Use at least 3 characters!
+
+
+
+// PROTOTYPAL INHERITANCE
+// If you want to take a object/class and extend it.
+// For instance, if you havea user object with its properties and methods and want to make adming and guest as modified variants of it.
+// Prototypal inheritance is a feature that helps with that. One of the ways of setting inheritance is __proto__
+
+let car = {
+	fuel: "diesel",
+}
+
+let volvo = {
+	isSwedish: true,
+}
+
+volvo.__proto__ = car;  //We set car to be a prototype of volvo.
+
+console.log(volvo.fuel); // diesel ...console.log tries to read property volvo.fuel, but its not in volvo, so JS follows the prototype reference and finds it in car
+console.log(volvo.isSwedish);  // true
+// The same works with methods
+
+let car = {
+	fuel: 'diesel',
+	autoPark() {
+		alert("Auto-parking mode enabled!")
+	},
+}
+
+let volvo = {
+	isSwedish: true,
+	__proto__: car,
+}
+
+volvo.autoPark();  // Auto-parking mode enabled!
+
+// Prototype chain can be as long as we need it to be, however it can go in circles. JS wil throw an error if we assign __proto__ in circle.
+
+let volvoS60 = {
+	tyoe: "S60",
+	__proto__: volvo,
+}
+
+volvoS60.autoPark(); // Auto-parking mode enabled!
+
+// If we assign a value to a property directly, it will immediately execute it, without using the prototype.
+
+volvoS60.fuel = 'gasoline';
+console.log(volvoS60.fuel);
+
+// No matter where the method is found: in an object or its prototype. In a method call, this is always the object before the dot.
+
+
+
